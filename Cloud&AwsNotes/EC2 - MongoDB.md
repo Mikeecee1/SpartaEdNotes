@@ -47,20 +47,20 @@
  After stopping an instance:  
     - Restart instance from aws
     - SSH into it  
-    `ssh -i your-key.pem ubuntu@<EC2_PUBLIC_IP>`
+    `ssh -i your-key.pem ubuntu@<EC2_PUBLIC_IP>`  
     - Check mongoDb is working  
-    `sudo systemctl status mongod`
+    `sudo systemctl status mongod`  
     - If not running  
-    `sudo systemctl start mongod`
-    - To work directly with server(optional)  
-    `mongosh`
+    `sudo systemctl start mongod`  
+    - To work directly with server(optional)   
+    `mongosh`  
     - Before connecting to Compass this command ensures MongoDB starts when instance is restarted  
-    `sudo systemctl enable mongod`
+    `sudo systemctl enable mongod`  
 
 **Useful Commands**  
 
-use <dbsname>
-show dbs
+use <dbsname>  
+show dbs  
 
 
 
