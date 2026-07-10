@@ -5,11 +5,11 @@
 **Create instance & connect**
 
 1. Create instance of EC2 on aws using key value pair
-2. Use Ubuntu 24.04
+2. Use Ubuntu 24.04 (Depending on usage)
 3. Create security group (or reuse if already set up) making sure SSH is set to myIP only 
 4. Launch instance
 5. Connect to bash terminal (cd into .ssh folder for key)
-6. Copy connection comand from 
+6. Copy connection command from 
 
 **Set up Mongodb on instance**
 
