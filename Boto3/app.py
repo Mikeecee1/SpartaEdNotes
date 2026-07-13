@@ -3,7 +3,7 @@
 #import from s3_operations.py for live connections to AWS S3
 #import from s3_operations_test.py for testing purposes without AWS S3 connection
 
-from s3_operations_test import *
+from s3_operations import *
 
 #displays all buckets
 def show_buckets():
@@ -32,7 +32,6 @@ def remove_bucket():
 
 # allows selection of a bucket and displays its contents
 def browse_bucket():
-    """Select a bucket and display its contents."""
 
     buckets = list_buckets()
 
@@ -56,11 +55,24 @@ def browse_bucket():
 
     print(f"\nContents of {selected_bucket}")
 
-    if not objects:
+    if objects is None:
+        print("Unable to read bucket contents.")
+
+    elif not objects:
         print("Bucket is empty.")
+
     else:
         for obj in objects:
-            print(obj["Key"])
+            print(f"{obj['Key']} ({obj['Size']} bytes)")
+    # objects = list_objects(selected_bucket)
+
+    # print(f"\nContents of {selected_bucket}")
+
+    # if not objects:
+    #     print("Bucket is empty.")
+    # else:
+    #     for obj in objects:
+    #         print(obj["Key"])
 
 
 def main():

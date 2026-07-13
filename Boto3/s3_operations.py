@@ -3,12 +3,24 @@ import boto3
 from botocore.exceptions import ClientError
 
 #create an S3 client
-s3 = boto3.client("s3")
+session = boto3.Session()
+#code to get the current region of the session
+region = session.region_name
+# print(session.region_name)
+
+s3 = session.client("s3")
+#s3 = boto3.client("s3")
 
 #create an S3 bucket
 def create_bucket(bucket_name):
     try:
-        s3.create_bucket(Bucket=bucket_name)
+        s3.create_bucket(
+            Bucket=bucket_name,
+            CreateBucketConfiguration={
+                "LocationConstraint": region
+            }
+        )
+
         print(f"Bucket '{bucket_name}' created.")
         return True
 
@@ -24,24 +36,34 @@ def list_buckets():
 
 #List all objects in a specific bucket
 
-def list_objects(bucket_name):
-    """
-    Returns a list of objects in the specified bucket.
-    """
+# def list_objects(bucket_name):
+#     """
+#     Returns a list of objects in the specified bucket.
+#     """
 
+#     try:
+#         response = s3.list_objects_v2(Bucket=bucket_name)
+
+#         return response.get("Contents", [])
+
+#     except ClientError as e:
+#         print(f"Error reading bucket '{bucket_name}': {e}")
+#         return []
+
+def list_objects(bucket_name):
     try:
         response = s3.list_objects_v2(Bucket=bucket_name)
-
         return response.get("Contents", [])
 
     except ClientError as e:
         print(f"Error reading bucket '{bucket_name}': {e}")
-        return []
-    
+        return None
 
 #read the contents of an object in a bucket TODO: implement this function
 
 #delete an S3 bucket
+from botocore.exceptions import ClientError
+
 def delete_bucket(bucket_name):
     try:
         s3.delete_bucket(Bucket=bucket_name)
@@ -49,7 +71,14 @@ def delete_bucket(bucket_name):
         return True
 
     except ClientError as e:
-        print(e)
+        error_code = e.response["Error"]["Code"]
+
+        if error_code == "AccessDenied":
+            print("You don't have permission to delete buckets.")
+
+        else:
+            print(f"Error: {e}")
+
         return False
     
 
