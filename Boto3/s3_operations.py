@@ -1,5 +1,6 @@
 #functions to use CRUD operations on S3 buckets using boto3
 import boto3
+import os
 from botocore.exceptions import ClientError
 
 #create an S3 client
